@@ -1,8 +1,27 @@
-#background {
-    display: table;
+.center-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-#form {
-    display: table-cell;
-    vertical-align: middle;
+.center-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    offset: 10px;
+}
+
+body {
+    background-image: url("img/background.jpg");
+    background-size: 300vh;
+    background-repeat: repeat;
+}
+
+grid {
+    border-radius: 100px;
+}
+
+.full-width {
+    width: 75%;
 }
