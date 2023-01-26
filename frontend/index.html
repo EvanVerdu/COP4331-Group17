@@ -1,31 +1,37 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html data-theme="dark" lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/pico.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Login</title>
 </head>
+
 <body>
-    <div id="background" class="container-fluid bg-image min-vh-100" style="background-image: url('img/background.jpg')">
-        <div id="form" class="d-flex justify-content-center align-items-center">
-            <div class="card">
-                <div class="card-body text-center">
-                    <h1>Login</h1>
-                    <div class="input-group form-group">
-                        <div class="m-3 text-center">
-                            <input type="email" class="form-control" id="username" placeholder="Email">
-                            <input type="email" class="form-control mt-1" id="password" placeholder="Password">
-                            <button type="submit" class="btn btn-primary mt-4 p-2">Submit</button>
-                        </div>
-                    </div>
-                    <small><a href="">Register here!</a></small>
-                </div>
+<main class="container center-box">
+    <article class="grid full-width">
+        <div>
+            <hgroup>
+                <h1>Login</h1>
+                <h2>Enter into a galaxy of contacts.</h2>
+            </hgroup>
+            <form>
+                <label for="username">
+                    Username
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                </label>
+                <label for="password">
+                    Password
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </label>
+                <button>Login</button>
+            </form>
+            <div>
+                <a href="#" class="center-text">Need an account? Register here!</a>
             </div>
         </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    </article>
+</main>
 </body>
 </html>
