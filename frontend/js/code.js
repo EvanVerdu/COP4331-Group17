@@ -15,21 +15,23 @@ function doLogin() {
 
 	let tmp = {"login": login, "password": password};
 	let jsonPayload = JSON.stringify(tmp);
-	
+
 	let url = urlBase + "Login" + ext;
-	
+
 	console.log(jsonPayload);
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', url, true);
 	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 	try {
 		xhr.onreadystatechange = function() {
-			console.log("Yayy");
 			if (this.readyState == 4 && this.status == 200) {
 				let jsonObject = JSON.parse(xhr.responseText);
 				userId = jsonObject.id;
 
 				if (userId < 1) {
+					
+					console.log("inccorect user/password");
+					return;
 				}
 
 				firstName = jsonObject.firstName;
@@ -68,9 +70,10 @@ function readCookie() {
 	}
 
 	if (userId < 0) {
-		// send to login page
+		window.location.href = "index.html";
+
 	} else {	
-		console.log("Hello");
+		window.location.href = "landing.html";
 	}
 
 }
