@@ -13,34 +13,34 @@
     else
     {
         $stmt = $conn->prepare("SELECT * FROM Contacts WHERE Name LIKE ? AND UserID=?");
-        $colorName = "%" . $inData["search"] . "%";
-	    	$stmt->bind_param("ss", $colorName, $inData["userId"]);
-		    $stmt->execute();
+        $search = "%" . $inData["search"] . "%";
+	$stmt->bind_param("ss", $search, $inData["userID"]);
+	$stmt->execute();
 		
-		    $result = $stmt->get_result();
+	$result = $stmt->get_result();
 		
-  		  while($row = $result->fetch_assoc())
-  		  {
-    			  if( $searchCount > 0 )
-    			  {
-    				    $searchResults .= ",";
-    			  }
+  	while($row = $result->fetch_assoc())
+  	{
+    		if( $searchCount > 0 )
+    		{
+    		    $searchResults .= ",";
+    		}
                
-    			  $searchCount++;
-    			  $searchResults .= '{"Name" : "' . $row["Name"] . '"}';
-    		}
+    		$searchCount++;
+    		$searchResults .= '{"Name" : "' . $row["Name"] . '", "Phone" : "' . $row["Phone"] . '", "Email" : "' . $row["Email"] . '"}';
+	}
     		
-    		if( $searchCount == 0 )
-    		{
-    			returnWithError( "No Records Found" );
-    		}
-    		else
-    		{
-    			returnWithInfo( $searchResults );
-    		}
+    	if( $searchCount == 0 )
+    	{
+    		returnWithError( "No Records Found" );
+    	}
+    	else
+   	{
+    		returnWithInfo( $searchResults );
+    	}
     		
-    		$stmt->close();
-    		$conn->close();
+    	$stmt->close();
+    	$conn->close();
     	}
 
 
