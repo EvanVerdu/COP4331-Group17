@@ -12,7 +12,8 @@ function doLogin() {
 
 	let login = document.getElementById("username").value;
 	let password = document.getElementById("password").value;
-
+	
+	document.getElementById("loginButton").setAttribute("aria-busy", "true");
 	let tmp = {"login": login, "password": password};
 	let jsonPayload = JSON.stringify(tmp);
 
@@ -29,8 +30,10 @@ function doLogin() {
 				userId = jsonObject.id;
 
 				if (userId < 1) {
-					
+
 					console.log("inccorect user/password");
+
+					document.getElementById("loginButton").setAttribute("aria-busy", "false");
 					return;
 				}
 
