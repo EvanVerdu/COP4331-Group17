@@ -13,7 +13,7 @@ function doLogin() {
 	let login = document.getElementById("username").value;
 	let password = document.getElementById("password").value;
 
-
+	document.getElementById("loginButton").setAttribute("aria-busy", "true");
 	let tmp = {"login": login, "password": password};
 	let jsonPayload = JSON.stringify(tmp);
 
@@ -80,7 +80,7 @@ function readCookie() {
 	if (userId < 0) {
 		window.location.href = "index.html";
 
-	} else {	
+	} else {
 		window.location.href = "landing.html";
 	}
 
