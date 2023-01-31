@@ -9,22 +9,26 @@ function doLogin() {
 	userId = 0;
 	firstName = "";
 	lastName = "";
+	
+	let userBox = document.getElementById("username");
+	let passBox = document.getElementById("password");
+	let logBttn = document.getElementById("loginButton");
+	let errBox = document.getElementById("message");
+	
+	let login = userBox.value;
+	let password = passBox.value;
 
-	let login = document.getElementById("username").value;
-	let password = document.getElementById("password").value;
 
-	document.getElementById("loginButton").setAttribute("aria-busy", "true");
 	let tmp = {"login": login, "password": password};
 	let jsonPayload = JSON.stringify(tmp);
 
 	let url = urlBase + "Login" + ext;
 
-	console.log(jsonPayload);
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', url, true);
 	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 	if (!(login === "" || password === "")) {
-		document.getElementById("loginButton").setAttribute("aria-busy", "true");
+		logBttn.setAttribute("aria-busy", "true");
 		try {
 			xhr.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
@@ -32,11 +36,11 @@ function doLogin() {
 					userId = jsonObject.id;
 
 					if (userId < 1) {
-						document.getElementById("username").setAttribute("aria-invalid", "true");
-						document.getElementById("password").setAttribute("aria-invalid", "true");
-						document.getElementById("loginButton").setAttribute("aria-busy", "false");
-						document.getElementById("message").innerHTML = "Incorrect Username/Password!";
-						document.getElementById("loginButton").setAttribute("disabled", "false");
+						userBox.setAttribute("aria-invalid", "true");
+						passBox.setAttribute("aria-invalid", "true");
+						logBttn.setAttribute("aria-busy", "false");
+						errBox.innerHTML = "Incorrect Username/Password!";
+						logBttn.setAttribute("disabled", "false");
 						return;
 					}
 
@@ -48,7 +52,7 @@ function doLogin() {
 			};
 			xhr.send(jsonPayload);
 		} catch(err) {
-			document.getElementById("message").innerHTML = "An unexpected error has occured.";
+			errBox.innerHTML = "An unexpected error has occured.";
 			console.log(err);
 		}
 	}
@@ -80,11 +84,81 @@ function readCookie() {
 	if (userId < 0) {
 		window.location.href = "index.html";
 
-	} else {
+	} else {	
 		window.location.href = "landing.html";
 	}
 
 }
+
+function doRegister() {
+	userId = 0;
+	firstName = "";
+	lastName = "";
+	
+	let firstBox = document.getElementById("firstname");
+	let lastBox = document.getElementById("lastname");
+	let userBox = document.getElementById("username");
+	let passBox = document.getElementById("password");
+	let confBox = document.getElementById("confirmPassword");
+	let regBttn = document.getElementById("registerButton");
+	let errBox = document.getElementById("message");
+
+	firstName = firstBox.value;
+	lastName = lastBox.value;
+	let login = userBox.value;
+	let password = passBox.value;
+	let confpass = confBox.value;
+
+	let tmp = {"firstName": firstName, "lastName": lastName, "login": login, "password": password};
+	let jsonPayload = JSON.stringify(tmp);
+	
+	let url = urlBase + "Register" + ext;
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', url, true);
+
+	if (!(firstName === "" || lastName === "" || login === "" || password === "" || confpass === "")) {
+		if (password.length > 20 || password.length < 8) {
+			passBox.setAttribute("aria-invalid", "true");
+			errBox.innerHTML = "Password must be 8-20 characters.";
+			regBttn.setAttribute("disabled", "false");
+			return;
+		}
+		if (password != confpass) {
+			confBox.setAttribute("aria-invalid", "true");
+			errBox.innerHTML = "Passwords must match!";
+			regBttn.setAttribute("disabled", "false");
+			return;
+		}
+		
+
+		regBttn.setAttribute("aria-busy", "true");
+		try {
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					let jsonObject = JSON.parse(xhr.responseText);
+					userId = jsonObject.id;
+
+					if (userId < 1) {
+						userBox.setAttribute("aria-invalid", "true");
+						regBttn.setAttribute("aria-busy", "false");
+						errBox.innerHTML = jsonObject.error;
+						regBttn.setAttribute("disabled", "false");
+						return;
+					}
+
+					firstName = jsonObject.firstName;
+					lastName = jsonObject.lastName;
+					saveCookie();
+					window.location.href = "landing.html";
+				}
+			};
+			xhr.send(jsonPayload);
+		} catch(err) {
+			errBox.innerHTML = "An unexpected error has occured.";
+		}
+	}
+}	
+
 
 function updateBox() {
 	document.getElementById("username").removeAttribute("aria-invalid", "false");
@@ -92,3 +166,12 @@ function updateBox() {
 	document.getElementById("message").innerHTML = "";
 	document.getElementById("loginButton").removeAttribute("disabled", "false");
 }
+
+function updateBox2() {
+	document.getElementById("username").removeAttribute("aria-invalid", "false");
+	document.getElementById("confirmPassword").removeAttribute("aria-invalid", "false");
+	document.getElementById("password").removeAttribute("aria-invalid", "false");
+	document.getElementById("registerButton").removeAttribute("disabled", "false");
+	document.getElementById("message").innerHTML = "";
+}
+

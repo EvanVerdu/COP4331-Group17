@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html data-theme="dark" lang="en">
 
-<head>
-    <link href="css/pico.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
+	<head>
+		<link href="css/pico.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+		<script src="js/code.js"></script>
+		<title>Register</title>
+	</head>
 
-<body>
-<main class="container center-box">
-    <article class="grid full-width">
-        <div>
-            <hgroup>
-                <h1>Register</h1>
-                <h2>Embark across the stars.</h2>
-            </hgroup>
-            <form>
-                <div class="grid">
-                    <label for="firstname">
-                        First name
-                        <input type="text" id="firstname" name="firstname" placeholder="First name" required>
-                    </label>
-                    <label for="lastname">
-                        Last name
-                        <input type="text" id="lastname" name="lastname" placeholder="Last name" required>
-                    </label>
-                </div>
-                <label for="username">
-                    Username
-                    <input type="text" id="username" name="username" placeholder="Username" required>
-                </label>
-                <label for="password">
-                    Password
-                    <input type="password" id="password" name="password" placeholder="Password" required>
-                </label>
-                <label for="confirmPassword">
-                    Confirm password
-                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
-                </label>
-                <button>Register</button>
-            </form>
-            <div>
-                <a href="#" class="center-text">Already have an account? Login here!</a>
-            </div>
-        </div>
-    </article>
-</main>
-</body>
+	<body>
+		<main class="container center-box">
+			<article class="grid full-width">
+				<div>
+					<hgroup>
+						<h1>Register</h1>
+						<h2>Embark across the stars.</h2>
+						<h2 id="message"></h2>
+					</hgroup>
+					<form onsubmit="return false">
+						<div class="grid">
+							<label for="firstname">
+								First name
+								<input type="text" id="firstname" name="firstname" placeholder="First name" required>
+							</label>
+							<label for="lastname">
+								Last name
+								<input type="text" id="lastname" name="lastname" placeholder="Last name" required>
+							</label>
+						</div>
+						<label for="username" onchange onpropertychange onkeyuponbaset oninput="updateBox2()">
+							Username
+							<input type="text" id="username" name="username" placeholder="Username" required>
+						</label>
+						<label for="password" onchange onpropertychange onkeyuponbaset oninput="updateBox2()">
+							Password
+							<input type="password" pattern=".{8,20}" title="Password must be 8-20 characters." id="password" name="password" placeholder="Password" required>
+						</label>
+						<label for="confirmPassword" onchange onpropertychange onkeyuponbaset oninput="updateBox2()">
+							Confirm password
+							<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
+						</label>
+						<button id="registerButton" onclick="doRegister()">Register</button>
+					</form>
+					<div>
+						<a href="http://cop4331-group17.xyz/" class="center-text">Already have an account? Login here!</a>
+					</div>
+				</div>
+			</article>
+		</main>
+	</body>
 </html>
