@@ -13,6 +13,7 @@ function doLogin() {
 	let login = document.getElementById("username").value;
 	let password = document.getElementById("password").value;
 
+
 	let tmp = {"login": login, "password": password};
 	let jsonPayload = JSON.stringify(tmp);
 
@@ -22,27 +23,34 @@ function doLogin() {
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', url, true);
 	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-	try {
-		xhr.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				let jsonObject = JSON.parse(xhr.responseText);
-				userId = jsonObject.id;
+	if (!(login === "" || password === "")) {
+		document.getElementById("loginButton").setAttribute("aria-busy", "true");
+		try {
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					let jsonObject = JSON.parse(xhr.responseText);
+					userId = jsonObject.id;
 
-				if (userId < 1) {
-					
-					console.log("inccorect user/password");
-					return;
+					if (userId < 1) {
+						document.getElementById("username").setAttribute("aria-invalid", "true");
+						document.getElementById("password").setAttribute("aria-invalid", "true");
+						document.getElementById("loginButton").setAttribute("aria-busy", "false");
+						document.getElementById("message").innerHTML = "Incorrect Username/Password!";
+						document.getElementById("loginButton").setAttribute("disabled", "false");
+						return;
+					}
+
+					firstName = jsonObject.firstName;
+					lastName = jsonObject.lastName;
+					saveCookie();
+					window.location.href = "landing.html";
 				}
-
-				firstName = jsonObject.firstName;
-				lastName = jsonObject.lastName;
-				saveCookie();
-				window.location.href = "landing.html";
-			}
-		};
-		xhr.send(jsonPayload);
-	} catch(err) {
-		console.log(err);
+			};
+			xhr.send(jsonPayload);
+		} catch(err) {
+			document.getElementById("message").innerHTML = "An unexpected error has occured.";
+			console.log(err);
+		}
 	}
 }
 
@@ -78,3 +86,9 @@ function readCookie() {
 
 }
 
+function updateBox() {
+	document.getElementById("username").removeAttribute("aria-invalid", "false");
+	document.getElementById("password").removeAttribute("aria-invalid", "false");
+	document.getElementById("message").innerHTML = "";
+	document.getElementById("loginButton").removeAttribute("disabled", "false");
+}
