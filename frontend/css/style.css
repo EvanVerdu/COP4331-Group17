@@ -1,9 +1,48 @@
-.center-box {
+@media only screen and (max-width: 990px ) { 
+    .center-box-index {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        zoom: 117%
+    }
+}
+@media only screen and (max-width: 990px ) { 
+    .center-box-register {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        zoom: 117%;
+    }
+}
+
+@media only screen and (min-width: 991px ) {
+    .center-box-index {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 117.5vh;
+        zoom:85%;
+    }
+}
+@media only screen and (min-width: 991px ) {
+    .center-box-register {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 133vh;
+        zoom:75%;
+    
+    }
+}
+
+/*.center-box {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-}
+} */
 
 .center-text {
     display: flex;
