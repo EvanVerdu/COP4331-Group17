@@ -125,6 +125,7 @@ function doRegister() {
 		}
 		if (password != confpass) {
 			confBox.setAttribute("aria-invalid", "true");
+			passBox.setAttribute("aria-invalid", "true");
 			errBox.innerHTML = "Passwords must match!";
 			regBttn.setAttribute("disabled", "false");
 			return;
