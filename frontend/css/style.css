@@ -57,3 +57,10 @@ grid {
 .full-width {
     width: 75%;
 }
+
+p {
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
