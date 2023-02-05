@@ -21,6 +21,8 @@
 
 .full-page-landing {
     height: 100vh;
+    position:relative;
+    padding-top: 10px;
 }
 
 .landing-box {
