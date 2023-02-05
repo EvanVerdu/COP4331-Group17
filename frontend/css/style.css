@@ -34,6 +34,11 @@
     offset: 10px;
 }
 
+.col-8{
+    position:relative;
+    bottom:5px;
+}
+
 html {
     background-image: url("img/background.jpg");
     background-size: 300vh;
