@@ -1,0 +1,64 @@
+<!doctype html>
+<!--
+there is a lot of jank here
+the <article> tag seems to inherently add a hefty margin above, very annoying...
+i experimented with filling the space with a <nav> which kinda worked but i couldnt
+figure out a background.
+we will fix it by monday :)
+- tom
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/pico-bootstrap-grid.min.css">
+    <link rel="stylesheet" href="css/style.css" >
+    <script src="js/code.js"></script>
+    <title>Contacts</title>
+</head>
+<body>
+<main class="container-fluid">
+    <div id="popup"></div>
+    <article>
+        <div class="row">
+            <div class="col-10">
+                <h2>Welcome, PLACEHOLDER</h2>
+            </div>
+            <div class="col-2">
+                <button class="secondary" onclick="location.href='http://cop4331-group17.xyz/'">Logout</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <label>
+                    <input type="text" placeholder="Awaiting input . . .">
+                </label>
+            </div>
+            <div class="col-2">
+                <button>Search</button>
+            </div>
+            <div class="col-2">
+                <button onclick="addNewContact()">Add New</button>
+            </div>
+        </div>
+        <hr>
+        <div id="contactList" class="row">
+            <div class="col-xl-4 col-md-6 col-sm-12">
+                <article>
+                    <hgroup>
+                        <h1>Place Holder</h1>
+                        (555) 555-5555<br>
+                        email@email.com
+                    </hgroup>
+                    <footer>
+                        <button onclick="createEditBox()">Edit</button>
+                        <button>Delete</button>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </article>
+</main>
+</body>
+</html>

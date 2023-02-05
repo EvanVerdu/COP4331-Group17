@@ -11,29 +11,32 @@
 </head>
 
 <body>
-<main class="container center-box-index">
-    <article class="grid full-width">
-        <div>
-            <hgroup>
-                <h1>Login</h1>
-                <h2>Enter into a galaxy of contacts.</h2>
-		<h2 id="message"></h2>
-            </hgroup>
-            <form onsubmit="return false">
-                <label for="username">
-                    Username
-		    <input type="text" id="username" name="username" placeholder="Username" required onchange onpropertychange onkeyuponpaste oninput="updateBox()">
-                </label>
-                <label for="password">
-                    Password
-                    <input type="password" id="password" name="password" placeholder="Password" required onchange onpropertychange onkeyuponpaste oninput="updateBox()">
-                </label>
-                <button id="loginButton" onclick="doLogin()">Login</button>
-            </form>
+<div class="container full-page">
+    <main class="container center-box-index">
+        <article class="grid full-width">
             <div>
-                <a href="http://cop4331-group17.xyz/register.html" class="center-text">Need an account? Register here!</a>
+                <hgroup>
+                    <h1>Login</h1>
+                    <h2>Enter into a galaxy of contacts.</h2>
+                </hgroup>
+                <div id="message"></div>
+                <form onsubmit="return false">
+                    <label for="username">
+                        Username
+                        <input type="text" id="username" name="username" placeholder="Username" required onchange onpropertychange onkeyuponpaste oninput="updateBox()">
+                    </label>
+                    <label for="password">
+                        Password
+                        <input type="password" id="password" name="password" placeholder="Password" required onchange onpropertychange onkeyuponpaste oninput="updateBox()">
+                    </label>
+                    <button id="loginButton" onclick="doLogin()">Login</button>
+                </form>
+                <div>
+                    <a href="http://cop4331-group17.xyz/register.html" class="center-text">Need an account? Register here!</a>
+                </div>
             </div>
-    </article>
-</main>
+        </article>
+    </main>
+</div>
 </body>
 </html>
