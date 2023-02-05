@@ -111,8 +111,8 @@ function doRegister() {
 	let regBttn = document.getElementById("registerButton");
 	let errBox = document.getElementById("message");
 
-	firstName = firstBox.value;
-	lastName = lastBox.value;
+	let firstName = firstBox.value;
+	let lastName = lastBox.value;
 	let login = userBox.value;
 	let password = passBox.value;
 	let confpass = confBox.value;
@@ -196,6 +196,7 @@ function createEditBox()
 	// Modifies the html to include a box that allows the user to edit
 	// the values of a contact
 	// TODO		basically just a proof of concept right now, needs functionality
+
 	let popup = document.getElementById("popup");
 	popup.innerHTML =
 		'<dialog open>' +
@@ -216,25 +217,42 @@ function removeEditBox()
 	errBox.innerHTML = "";
 }
 
-function addNewContact()
+let cardCount = 0;
+
+function addNewContact(firstName, lastName, phone, email)
 {
-	// TODO		basically just a proof of concept right now, needs functionality
+	// Adds a new contact to the grid
+	// Accepts 4 strings
+
+	// Create id string by adding 'c' to how many cards there are
+	let id = 'c'+cardCount++;
+
+	// Add to html
 	let contactList = document.getElementById("contactList");
 	contactList.innerHTML +=
-		'<div class="col-xl-4 col-md-6 col-sm-12">\n' +
+		'<div class="col-xl-4 col-md-6 col-sm-12" id="'+id+'">\n' +
 		'<article>\n' +
 		'<hgroup>\n' +
-		'<h1>Place Holder</h1>\n' +
-		'(555) 555-5555<br>\n' +
-		'email@email.com\n' +
+		'<h1>'+firstName+' '+lastName+'</h1>\n' +
+		''+phone+'<br>\n' +
+		''+email+'\n' +
 		'</hgroup>\n' +
 		'<footer>\n' +
 		'<button onclick="createEditBox()">Edit</button>\n' +
-		'<button>Delete</button>\n' +
+		'<button onclick="removeContactCard('+id+')">Delete</button>\n' +
 		'</footer>\n' +
 		'</article>\n' +
 		'</div>'
 	;
+}
+
+function removeContactCard(id)
+{
+	// A function to remove a contact card from the grid
+	// Called from inside the given contact card
+	// TODO	This needs to also remove the card from the database!
+
+	document.getElementById('contactList').removeChild(id);
 }
 
 
