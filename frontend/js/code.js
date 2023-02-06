@@ -231,13 +231,13 @@ function addNewContact(firstName, lastName, phone, email)
 	let contactList = document.getElementById("contactList");
 	contactList.innerHTML +=
 		'<div class="col-xl-4 col-md-6 col-sm-12" id="'+id+'">\n' +
-		'<article>\n' +
+		'<article class = "contact-box">\n' +
 		'<hgroup>\n' +
 		'<h1>'+firstName+' '+lastName+'</h1>\n' +
 		''+phone+'<br>\n' +
 		''+email+'\n' +
 		'</hgroup>\n' +
-		'<footer>\n' +
+		'<footer class= "contact-box-footer">\n' +
 		'<button onclick="createEditBox()">Edit</button>\n' +
 		'<button onclick="removeContactCard('+id+')">Delete</button>\n' +
 		'</footer>\n' +
