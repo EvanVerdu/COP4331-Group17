@@ -88,8 +88,14 @@ function readCookie() {
 			userId = parseInt(tokens[1].trim());
 		}
 	}
-	
-	return (userId < 0);
+
+	if (userId < 0) {
+		window.location.href = "index.html";
+
+	} else {
+		window.location.href = "landing.html";
+	}
+
 }
 
 function doRegister() {
@@ -225,13 +231,13 @@ function addNewContact(firstName, lastName, phone, email)
 	let contactList = document.getElementById("contactList");
 	contactList.innerHTML +=
 		'<div class="col-xl-4 col-md-6 col-sm-12" id="'+id+'">\n' +
-		'<article class = "contact-box">\n' +
+		'<article>\n' +
 		'<hgroup>\n' +
 		'<h1>'+firstName+' '+lastName+'</h1>\n' +
 		''+phone+'<br>\n' +
 		''+email+'\n' +
 		'</hgroup>\n' +
-		'<footer class= "contact-box-footer">\n' +
+		'<footer>\n' +
 		'<button onclick="createEditBox()">Edit</button>\n' +
 		'<button onclick="removeContactCard('+id+')">Delete</button>\n' +
 		'</footer>\n' +
@@ -245,6 +251,7 @@ function removeContactCard(id)
 	// A function to remove a contact card from the grid
 	// Called from inside the given contact card
 	// TODO	This needs to also remove the card from the database!
+
 	document.getElementById('contactList').removeChild(id);
 }
 
