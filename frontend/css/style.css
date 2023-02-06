@@ -27,7 +27,7 @@
 
 .landing-box {
     zoom: 80%;
-    box-shadow: 0.2px 0.2px 2px 0.2px rgba(255, 255, 255, 0.2) , -0.2px -0.2px 2px 0.2px rgba(255, 255, 255, 0.2); /* Exterior box shadow color and size*/
+    box-shadow: 0.2px 0.2px 2px 0.2px rgba(255, 255, 255, 0.3) , -0.2px -0.2px 2px 0.2px rgba(255, 255, 255, 0.3);
 }
 
 .center-text {
@@ -42,19 +42,20 @@
     bottom:5px;
 }
 
+
 .contact-box{
-    /*box-shadow: 0.2px 0.2px 2px 0.2px rgba(255, 255, 255, 0.8) , -0.2px -0.2px 2px 0.2px rgba(255, 255, 255, 0.8) ;*/ /*Other colors and sizes*/
+    /*box-shadow: 0.2px 0.2px 2px 0.2px rgba(255, 255, 255, 0.8) , -0.2px -0.2px 2px 0.2px rgba(255, 255, 255, 0.8) ;*/
     /*box-shadow: 0.2px 0.2px 2px 0.2px rgba(0, 0, 0, 0.8) , -0.2px -0.2px 2px 0.2px rgba(0, 0, 0, 0.8) ;*/
     /*box-shadow: 1px 1px 10px 10px rgba(255, 255, 255, 0.2) , -1px -1px 10px 10px rgba(255, 255, 255, 0.2) ;  foggy white*/
     /*box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.2) , -1px -1px 10px 10px rgba(0, 0, 0, 0.2) ;*/
     /*box-shadow: 0.2px 0.2px 5px 5px rgb(7, 172, 218) , -0.2px -0.2px 5px 5px rgba(7, 172, 218) ;*/
     /*box-shadow: 3px 3px 25px 0.1px rgb(0, 0, 0, 0.29) , -3px -3px 25px 0.1px rgba(0, 0, 0, 0.29) ;*/
-    box-shadow: 0.2px 0.2px 2px 0.2px rgba(255, 255, 255, 0.5) , -0.2px -0.2px 2px 0.2px rgba(255, 255, 255, 0.5); /* small contact shadow color and size*/
+    box-shadow: 0.2px 0.2px 2px 0.2px rgba(255, 255, 255, 0.5) , -0.2px -0.2px 2px 0.2px rgba(255, 255, 255, 0.5);
     
 }
 
 .contact-box-footer{
-  border-top-color: rgba(255, 255, 255, 0.2); /*small contact inner line color */
+  border-top-color: rgba(255, 255, 255, 0.3);
 }
 
 html {
@@ -76,4 +77,9 @@ p {
     display: flex;
     justify-content: center;
     font-weight: bold;
+}
+
+hr{
+    background-color: rgba(255, 255, 255, 0.3);
+    height: 2px;
 }
