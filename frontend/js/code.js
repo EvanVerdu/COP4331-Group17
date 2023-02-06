@@ -105,8 +105,8 @@ function doRegister() {
 	let regBttn = document.getElementById("registerButton");
 	let errBox = document.getElementById("message");
 
-	firstName = firstBox.value;
-	lastName = lastBox.value;
+	let firstName = firstBox.value;
+	let lastName = lastBox.value;
 	let login = userBox.value;
 	let password = passBox.value;
 	let confpass = confBox.value;
@@ -212,7 +212,6 @@ function removeEditBox()
 }
 
 let cardCount = 0;
-
 
 function addNewContact(firstName, lastName, phone, email)
 {
