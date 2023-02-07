@@ -1,0 +1,85 @@
+.center-box-register {
+    display: flex;
+    justify-content: center;
+    min-height: auto;
+    zoom: 80%;
+}
+
+.center-box-index {
+    display: flex;
+    justify-content: center;
+    min-height: auto;
+    zoom: 80%
+}
+
+.full-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.full-page-landing {
+    height: 100vh;
+    position:relative;
+    padding-top: 10px;
+}
+
+.landing-box {
+    zoom: 80%;
+    box-shadow: 0.2px 0.2px 2px 0.2px rgba(255, 255, 255, 0.3) , -0.2px -0.2px 2px 0.2px rgba(255, 255, 255, 0.3); /*exterior border color and size*/
+}
+
+.center-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    offset: 10px;
+}
+
+.col-8{
+    position:relative;
+    bottom:5px;
+}
+
+
+.contact-box{
+    /*box-shadow: 0.2px 0.2px 2px 0.2px rgba(255, 255, 255, 0.8) , -0.2px -0.2px 2px 0.2px rgba(255, 255, 255, 0.8) ;*/ /*different color presets, size and color*/
+    /*box-shadow: 0.2px 0.2px 2px 0.2px rgba(0, 0, 0, 0.8) , -0.2px -0.2px 2px 0.2px rgba(0, 0, 0, 0.8) ;*/
+    /*box-shadow: 1px 1px 10px 10px rgba(255, 255, 255, 0.2) , -1px -1px 10px 10px rgba(255, 255, 255, 0.2) ;  foggy white*/
+    /*box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.2) , -1px -1px 10px 10px rgba(0, 0, 0, 0.2) ;*/
+    /*box-shadow: 0.2px 0.2px 5px 5px rgb(7, 172, 218) , -0.2px -0.2px 5px 5px rgba(7, 172, 218) ;*/
+    /*box-shadow: 3px 3px 25px 0.1px rgb(0, 0, 0, 0.29) , -3px -3px 25px 0.1px rgba(0, 0, 0, 0.29) ;*/
+    box-shadow: 0.2px 0.2px 2px 0.2px rgba(255, 255, 255, 0.5) , -0.2px -0.2px 2px 0.2px rgba(255, 255, 255, 0.5);
+    
+}
+
+.contact-box-footer{
+  border-top-color: rgba(255, 255, 255, 0.3); /* in small contact box inner line color and size*/
+}
+
+html {
+    background-image: url("img/background.jpg");
+    background-size: 300vh;
+    background-repeat:inherit;
+}
+
+grid {
+    border-radius: 100px;
+}
+
+.full-width {
+    width: 75%;
+}
+
+p {
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+
+hr{
+    background-color: rgba(255, 255, 255, 0.3);
+    height: 2px;
+}

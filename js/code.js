@@ -313,7 +313,7 @@ function createContactFromPopup()
 	if (firstName === "" || lastName === "" || phone === "" || email === "") {
 			return;
 	}
-	id = 'c';
+	id = 0;
 	let tmp = {"name": firstName + " " + lastName, "phone": phone, "email" : email, "userId" : userId};
 	let jsonPayload = JSON.stringify(tmp);
 	let url = urlBase + "Create" + ext;
@@ -324,7 +324,7 @@ function createContactFromPopup()
 			xhr.onreadystatechange = function() {
 				if (this.readyState === 4 && this.status === 200) {
 					let jsonObject = JSON.parse(xhr.responseText);
-					id ='c' + jsonObject.id;
+					id = jsonObject.id;
 					if (jsonObject.error !== "") {
 						throw new Error(jsonObject.error);
 					}
@@ -363,8 +363,8 @@ function createContact(firstName, lastName, phone, email, id)
 		''+email+'\n' +
 		'</hgroup>\n' +
 		'<footer class="contact-box-footer">\n' +
-		'<button onclick="createEditBox('+id+')">Edit</button>' +
-		'<button onclick="deleteContact('+id+')">Delete</button>' +
+		'<button onclick="createEditBox(c'+id+')">Edit</button>' +
+		'<button onclick="deleteContact(c'+id+')">Delete</button>' +
 		'</footer>\n' +
 		'</article>\n' +
 		'</div>'
@@ -375,7 +375,7 @@ function removeContact(id)
 {
 	// A function to remove a contact card from the grid
 	// Called from inside the given contact card
-	document.getElementById('contactList').removeChild(id);
+	document.getElementById('c' + id);
 }
 
 function deleteContact(id) {
