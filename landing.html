@@ -9,35 +9,42 @@
     <script src="js/code.js"></script>
     <title>Contacts</title>
 </head>
-<body onLoad="openLandingPage()">
+<body onload="openLanding()">
+<nav style="background:white;">
+    <ul>
+        <div style="display:flex; justify-content:left; padding:2px;">
+            <img src="css\img\Galaxy-logo.png" style="width:85px; height:100%"/>
+            <h3 style="margin-bottom:0px; margin-top:6px;"> Galaxy Contacts</h3>
+        </div>
+    </ul>
+    <ul>
+        <li  style="padding-right:30px!important;"><a style="color:hsl(205deg 30% 15%);"onclick="doLogout()">Logout</a></li>
+    </ul>
+</nav>
 <main class="container-fluid full-page-landing">
-    <div id="popup"></div>
-    <article class = "landing-box">
-        <div class="row">
-            <div class="col-10">
-                <h2 id="welcome">Welcome, </h2>
-            </div>
-            <div class="col-2">
-                <button class="secondary" onclick="doLogout()">Logout</button>
+    <div style="margin:40px;">
+        <div class="row" style="justify-content:center;">
+            <div class="col-8">
+                <h3 style="color:white;"id="welcome">Welcome, </h3>
             </div>
         </div>
-        <div class="row">
-            <div class="col-8">
+        <div class="row" style="justify-content:center;">
+            <div class="col-4">
                 <label>
-                    <input id="search" type="text" placeholder="Awaiting input . . .">
+                    <input id="search" style="border:solid 2px white; color:white;" type="text" placeholder="Awaiting input . . .">
                 </label>
             </div>
             <div class="col-2">
-                <button>Search</button>
+                <button onclick="doSearch()">Search</button>
             </div>
             <div class="col-2">
-                <button onclick="createCreateBox()">Add New</button>
+                <button onclick="createPopup()">Add New</button>
             </div>
         </div>
-        <hr>
-        <div id="contactList" class="row">
-        </div>
-    </article>
+    </div>
+    <div id="popup"></div>
+    <div id="contactList" class="row">
+    </div>
 </main>
 </body>
 </html>

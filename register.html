@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme="dark" lang="en">
+<html data-theme="light" lang="en">
 <head>
 	<link href="css/pico.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
@@ -11,12 +11,13 @@
 <body>
 <div class="container full-page">
 	<main class="container center-box-register">
-		<article class="grid full-width">
+		<article class="login_main grid full-width">
 			<div>
-				<hgroup>
-					<h1>Register</h1>
-					<h2>Embark across the stars.</h2>
-				</hgroup>
+				<div style="display:flex; justify-content:center;">
+                    <img src="css\img\Galaxy-logo.png" style="width:103px; height:100%"/>
+                    <h1 style="margin-bottom:30px;"> Galaxy Contacts</h1>
+                </div>
+				<h1 style="text-align:center; margin-bottom:20px!important;">Register</h1>
 				<form onsubmit="return false">
 					<div class="grid">
 						<label for="firstname">
@@ -28,19 +29,19 @@
 							<input type="text" id="lastname" name="lastname" placeholder="Last name" required>
 						</label>
 					</div>
-					<label for="username" onchange oninput="updateBox2()">
+					<label for="username" onchange oninput="errorCheckRegister()">
 						Username
 						<input type="text" id="username" name="username" placeholder="Username" required>
 					</label>
-					<label for="password" onchange oninput="updateBox2()">
+					<label for="password" onchange oninput="errorCheckRegister()">
 						Password
 						<input type="password" pattern=".{8,20}" title="Password must be 8-20 characters." id="password" name="password" placeholder="Password" required>
 					</label>
-					<label for="confirmPassword" onchange oninput="updateBox2()">
+					<label for="confirmPassword" onchange oninput="errorCheckRegister()">
 						Confirm password
 						<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
 					</label>
-					<p id="message"></p>
+					<span style="color:red; text-align:left;" id="message"></span>
 					<button id="registerButton" onclick="doRegister()">Register</button>
 				</form>
 				<div>
