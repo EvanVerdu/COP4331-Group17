@@ -24,7 +24,7 @@
 <main class="container-fluid full-page-landing">
     <div style="margin:40px;">
         <div class="row" style="justify-content:center;">
-            <div class="col-8">
+            <div class="col-10">
                 <h3 style="color:white;"id="welcome">Welcome, </h3>
             </div>
         </div>
@@ -40,10 +40,14 @@
             <div class="col-2">
                 <button onclick="createPopup()">Add New</button>
             </div>
+            <div class="col-2">
+                <button onclick="loadAll()">Load All</button>
+            </div>
         </div>
     </div>
     <div id="popup"></div>
-    <div id="contactList" class="row">
+    <div id="landing-message"></div>
+    <div id="contactList" class="row" style="margin-left:auto;margin-right:auto;">
     </div>
 </main>
 </body>

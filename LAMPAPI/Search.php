@@ -12,7 +12,7 @@
     }
     else
     {
-        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE Name LIKE ? AND UserID=?");
+        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE Name LIKE ? AND UserID=? ORDER BY Name ASC");
         $search = "%" . $inData["search"] . "%";
 	    	$stmt->bind_param("ss", $search, $inData["userID"]);
 		    $stmt->execute();

@@ -11,6 +11,7 @@
 <body>
 <div class="container full-page">
 	<main class="container center-box-register">
+		<div id="popup"></div>
 		<article class="login_main grid full-width">
 			<div>
 				<div style="display:flex; justify-content:center;">
@@ -35,13 +36,12 @@
 					</label>
 					<label for="password" onchange oninput="errorCheckRegister()">
 						Password
-						<input type="password" pattern=".{8,20}" title="Password must be 8-20 characters." id="password" name="password" placeholder="Password" required>
+						<input type="password" id="password" name="password" placeholder="Password" required>
 					</label>
 					<label for="confirmPassword" onchange oninput="errorCheckRegister()">
 						Confirm password
 						<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
 					</label>
-					<span style="color:red; text-align:left;" id="message"></span>
 					<button id="registerButton" onclick="doRegister()">Register</button>
 				</form>
 				<div>

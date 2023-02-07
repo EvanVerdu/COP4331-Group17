@@ -91,3 +91,8 @@ hr{
     color: rgb(194, 194, 194);
     opacity: 1; /* Firefox */
 }
+#landing-message{
+    color:white;
+    font-size:30px;
+    text-align:center;
+}

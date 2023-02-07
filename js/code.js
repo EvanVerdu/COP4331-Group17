@@ -69,32 +69,40 @@ function doRegister() {
 	let passBox = document.getElementById("password");
 	let confBox = document.getElementById("confirmPassword");
 	let regBttn = document.getElementById("registerButton");
-	let message = document.getElementById("message");
+	let popup = document.getElementById("popup");
 
-	let firstName = firstBox.value;
-	let lastName = lastBox.value;
+	let firstNameIn = firstBox.value;
+	let lastNameIn = lastBox.value;
 	let login = userBox.value;
 	let password = passBox.value;
 	let confpass = confBox.value;
 
-	let tmp = {"firstName": firstName, "lastName": lastName, "login": login, "password": password};
+	let tmp = {"firstName": firstNameIn, "lastName": lastNameIn, "login": login, "password": password};
 	let jsonPayload = JSON.stringify(tmp);
 
 	let url = urlBase + "Register" + ext;
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', url, true);
 
-	if (!(firstName === "" || lastName === "" || login === "" || password === "" || confpass === "")) {
+	if (!(firstNameIn === "" || lastNameIn === "" || login === "" || password === "" || confpass === "")) {
 		if (password.length > 20 || password.length < 8) {
 			passBox.setAttribute("aria-invalid", "true");
-			message.innerHTML = "*Password must be 8-20 characters.";
+			errorPopup(
+				popup,
+				"Error",
+				"Password must be 8-20 characters."
+			);
 			regBttn.setAttribute("disabled", "false");
 			return;
 		}
 		if (password !== confpass) {
 			confBox.setAttribute("aria-invalid", "true");
 			passBox.setAttribute("aria-invalid", "true");
-			message.innerHTML = "*Passwords must match!";
+			errorPopup(
+				popup,
+				"Error",
+				"Passwords must match!"
+			);
 			regBttn.setAttribute("disabled", "false");
 			return;
 		}
@@ -106,15 +114,18 @@ function doRegister() {
 				if (this.readyState === 4 && this.status === 200) {
 					let jsonObject = JSON.parse(xhr.responseText);
 					userId = jsonObject.id;
-
 					if (userId < 1) {
 						userBox.setAttribute("aria-invalid", "true");
 						regBttn.setAttribute("aria-busy", "false");
-						message.innerHTML = "*"+jsonObject.error;
+						errorPopup(
+							popup,
+							"Error!",
+							jsonObject.error
+						);
 						regBttn.setAttribute("disabled", "false");
 						return;
 					}
-
+					
 					firstName = jsonObject.firstName;
 					lastName = jsonObject.lastName;
 					saveCookie();
@@ -123,7 +134,11 @@ function doRegister() {
 			};
 			xhr.send(jsonPayload);
 		} catch(err) {
-			message.innerHTML = "*An unexpected error has occurred.";
+			errorPopup(
+				popup,
+				"Error!",
+				"An unexpected error has occurred."
+			);
 		}
 	}
 }
@@ -197,7 +212,10 @@ function doSearch() {
 			xhr.onreadystatechange = function() {
 				if (this.readyState === 4 && this.status === 200) {
 					let jsonObject = JSON.parse(xhr.responseText);
-					if (jsonObject.error !== "") {
+					if(jsonObject.error == "No Records Found"){
+						document.getElementById("landing-message").innerHTML = 'No Contacts Found, either refine your search or click "Add New" to add a new contact!';
+					}
+					else if (jsonObject.error !== "") {
 						throw new Error(jsonObject.error);
 					}
 					for (let i = 0; i < jsonObject.results.length; i++) {
@@ -207,6 +225,7 @@ function doSearch() {
 						email = curr.Email;
 						id = curr.Id;
 						createContactCard(fullName, phone, email, id);
+						document.getElementById("landing-message").innerHTML = '';
 					}
 				}
 			};
@@ -237,6 +256,9 @@ function doDelete(id) {
 					}else{
 						removeContactCard(id);
 						closePopup();
+						if(document.getElementById("contactList").childNodes.length < 1){
+							document.getElementById("landing-message").innerHTML = 'You currently have no contacts, begin adding them by clicking "Add New"!';
+						}
 					}
 				}
 			};
@@ -316,8 +338,11 @@ function doCreate()
 					if (jsonObject.error !== "") {
 						throw new Error(jsonObject.error);
 					}
+					document.getElementById("search").value = '';
 					closePopup();
 					createContactCard(jsonObject.name, jsonObject.phone, jsonObject.email, jsonObject.id);
+					loadAll();
+					document.getElementById("landing-message").innerHTML = '';
 				}
 			};
 			xhr.send(jsonPayload);
@@ -333,6 +358,10 @@ function doCreate()
 }
 
 function loadAll(){
+	// Make sure to remove all current cards
+	document.getElementById("contactList").innerHTML = "";
+	document.getElementById("search").value = "";
+
 	let tmp = {"userID" : userId, "search" : ""};
 	let jsonPayload = JSON.stringify(tmp);
 	let url = urlBase + "Search" + ext;
@@ -343,9 +372,13 @@ function loadAll(){
 			xhr.onreadystatechange = function() {
 				if (this.readyState === 4 && this.status === 200) {
 					let jsonObject = JSON.parse(xhr.responseText);
-					if (jsonObject.error !== "") {
+					if(jsonObject.error == "No Records Found"){
+						document.getElementById("landing-message").innerHTML = 'You currently have no contacts, begin adding them by clicking "Add New"!';
+					}
+					else if (jsonObject.error !== "") {
 						throw new Error(jsonObject.error);
 					}
+					
 					for (let i = 0; i < jsonObject.results.length; i++) {
 						let curr = jsonObject.results[i];
 						fullName = curr.Name;
@@ -353,6 +386,7 @@ function loadAll(){
 						email = curr.Email;
 						id = curr.Id;
 						createContactCard(fullName, phone, email, id);
+						document.getElementById("landing-message").innerHTML = '';
 					}
 				}
 			};
@@ -375,17 +409,16 @@ function createContactCard(name, phone, email, id)
 	// Create id string by adding 'c' to how many cards there are
 
 	// Add to html
-	console.log(id);
 	let contactList = document.getElementById("contactList");
 	contactList.innerHTML +=
 		'<div class="col-xl-3 col-md-6 col-sm-12">\n' +
-		'<article>\n' +
+		'<article style="border-radius:20px;">\n' +
 		'<hgroup id="'+id+'">\n' +
 		'<h1 id="name">'+name+'</h1>\n'+
 		'<span id="phone">'+phone+'</span><br>\n' +
 		'<span id="email">'+email+'</span>\n' +
 		'</hgroup>\n' +
-		'<footer class="contact-box-footer">\n' +
+		'<footer class="contact-box-footer" style="border-bottom-left-radius:20px;border-bottom-right-radius:20px;">\n' +
 		'<button class="contrast outline" onclick="editPopup('+"'"+id+"'"+')">Edit</button>' +
 		'<button onclick="deletePopup('+"'"+id+"'"+')">Delete</button>' +
 		'</footer>\n' +
@@ -407,7 +440,7 @@ function errorPopup(popup, errorTitle, errorMessage)
 	// Creating a little nice popup to tell the silly user that they screwed it all up.
 	popup.innerHTML =
 		'<dialog open>' +
-		'<article>' +
+		'<article style="border-radius:20px; width:100%;">' +
 		'<h3>'+errorTitle+'</h3>' +
 		'<span>'+errorMessage+'</span>' +
 		'<footer>' +
@@ -427,10 +460,10 @@ function createPopup()
 	let popup = document.getElementById("popup");
 	popup.innerHTML =
 		'<dialog open>' +
-		'<article>' +
+		'<article style="border-radius:20px;width:100%;">' +
 		'<h3>Create</h3>' +
 		'<label htmlFor="name">' +
-		'First name' +
+		'Name' +
 		'<input type="text" id="name" name="name" placeholder="Name" required>' +
 		'</label>' +
 		'<label htmlFor="phone">' +
@@ -443,7 +476,7 @@ function createPopup()
 		'</label>' +
 		'<footer style="display:flex">' +
 		'<button style="margin-right:15px;" class="contrast outline" onclick="closePopup()">Cancel</button>' +
-		'<button style="margin-right:15px;" onclick="doCreate('+"'"+id+"'"+')">Create</button>' +
+		'<button style="margin-right:15px;" onclick="doCreate()">Create</button>' +
 		'</footer>' +
 		'</article>' +
 		'</dialog>'
@@ -461,7 +494,7 @@ function editPopup(id)
 	let popup = document.getElementById("popup");
 	popup.innerHTML =
 		'<dialog open>' +
-			'<article>' +
+			'<article style="border-radius:20px;width:100%;">' +
 				'<h3>Edit</h3>' +
 				'<label htmlFor="name">' +
 					'Name' +
@@ -477,7 +510,7 @@ function editPopup(id)
 				'</label>' +
 				'<footer style="display:flex">' +
 					'<button style="margin-right:15px;" class="contrast outline" onclick="closePopup()">Cancel</button>' +
-					'<button style="margin-right:15px;" onclick="doEdit('+"'"+id+"'"+')">Edit</button>' +
+					'<button style="margin-right:15px;" onclick="doEdit('+"'"+id+"'"+')">Confirm</button>' +
 				'</footer>' +
 			'</article>' +
 		'</dialog>'
@@ -495,7 +528,7 @@ function deletePopup(id)
 	let popup = document.getElementById("popup");
 	popup.innerHTML =
 		'<dialog open>' +
-			'<article>' +
+			'<article style="border-radius:20px;">' +
 				'<div style="font-size:1.25rem;">Delete <span style="font-weight:bold;">'+name+'</span> from your contact list?</div><br>' +
 				'<div>'+
 				'<span>Name: '+name+'</span><br>'+
@@ -518,15 +551,14 @@ function closePopup()
 }
 
 function updateContactCard(resp) {
-	document.getElementById("'"+resp.id+"'").childNodes['1'].innerHTML = resp.name;
-	document.getElementById("'"+resp.id+"'").childNodes['3'].innerHTML = resp.phone;;
-	document.getElementById("'"+resp.id+"'").childNodes['6'].innerHTML = resp.email;
+	document.getElementById(resp.id).childNodes['1'].innerHTML = resp.name;
+	document.getElementById(resp.id).childNodes['3'].innerHTML = resp.phone;;
+	document.getElementById(resp.id).childNodes['6'].innerHTML = resp.email;
 }
 
 function errorCheckLogin() {
 	document.getElementById("username").removeAttribute("aria-invalid", "false");
 	document.getElementById("password").removeAttribute("aria-invalid", "false");
-	document.getElementById("message").innerHTML = "";
 	document.getElementById("loginButton").removeAttribute("disabled", "false");
 }
 
@@ -535,7 +567,6 @@ function errorCheckRegister() {
 	document.getElementById("confirmPassword").removeAttribute("aria-invalid", "false");
 	document.getElementById("password").removeAttribute("aria-invalid", "false");
 	document.getElementById("registerButton").removeAttribute("disabled", "false");
-	document.getElementById("message").innerHTML = "";
 }
 
 

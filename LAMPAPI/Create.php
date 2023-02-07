@@ -16,32 +16,20 @@
     }
     else
     {
+
+        $stmt = $conn->prepare("INSERT INTO Contacts(Name, Phone, Email, UserId) VALUES(?,?,?,?)");
+        $stmt->bind_param("ssss", $inData["name"], $inData["phone"], $inData["email"], $inData["userId"]);
+        $stmt->execute();
+
         $stmt = $conn->prepare("SELECT ID, Name, Phone, Email, UserId FROM Contacts WHERE Name=? AND Phone=? AND Email=? AND UserId=?");
-		$stmt->bind_param("ssss", $inData["name"], $inData["phone"], $inData["email"], $inData["userId"]);
-		$stmt->execute();
+        $stmt->bind_param("ssss", $inData["name"], $inData["phone"], $inData["email"], $inData["userId"]);
+        $stmt->execute();
 
         $result = $stmt->get_result();
 
-        if( $row = $result->fetch_assoc()  )
-        {
-            returnWithError("Contact Already Exists.");
-        }
-        else
-        {
-            $stmt = $conn->prepare("INSERT INTO Contacts(Name, Phone, Email, UserId) VALUES(?,?,?,?)");
-            $stmt->bind_param("ssss", $inData["name"], $inData["phone"], $inData["email"], $inData["userId"]);
-            $stmt->execute();
-
-            $stmt = $conn->prepare("SELECT ID, Name, Phone, Email, UserId FROM Contacts WHERE Name=? AND Phone=? AND Email=? AND UserId=?");
-            $stmt->bind_param("ssss", $inData["name"], $inData["phone"], $inData["email"], $inData["userId"]);
-            $stmt->execute();
-
-            $result = $stmt->get_result();
-
-            $row = $result->fetch_assoc();
-            
-            returnWithInfo($row['ID'], $row['Name'], $row['Phone'], $row['Email'], $row['UserId']);
-        }
+        $row = $result->fetch_assoc();
+        
+        returnWithInfo($row['ID'], $row['Name'], $row['Phone'], $row['Email'], $row['UserId']);
 
         $stmt->close();
         $conn->close();
