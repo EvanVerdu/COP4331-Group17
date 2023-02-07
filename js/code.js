@@ -426,7 +426,6 @@ function createContactCard(name, phone, email, id)
 	;
 }
 
-//Still needs to be finished
 function removeContactCard(id)
 {
 	// A function to remove a contact card from the grid
@@ -461,6 +460,7 @@ function createPopup()
 		'<dialog open>' +
 		'<article style="border-radius:20px;width:100%;">' +
 		'<h3>Create</h3>' +
+		'<form onsubmit="return false">' +
 		'<label htmlFor="name">' +
 		'Name' +
 		'<input type="text" id="name" name="name" placeholder="Name" required>' +
@@ -477,6 +477,7 @@ function createPopup()
 		'<button style="margin-right:15px;" class="contrast outline" onclick="closePopup()">Cancel</button>' +
 		'<button style="margin-right:15px;" onclick="doCreate()">Create</button>' +
 		'</footer>' +
+		'</form>'+
 		'</article>' +
 		'</dialog>'
 	;
@@ -495,6 +496,7 @@ function editPopup(id)
 		'<dialog open>' +
 			'<article style="border-radius:20px;width:100%;">' +
 				'<h3>Edit</h3>' +
+				'<form onsubmit="return false">' +
 				'<label htmlFor="name">' +
 					'Name' +
 					'<input type="text" id="edit-name" name="name" placeholder="Name" value='+'"'+name+'"'+' required>' +
@@ -511,6 +513,7 @@ function editPopup(id)
 					'<button style="margin-right:15px;" class="contrast outline" onclick="closePopup()">Cancel</button>' +
 					'<button style="margin-right:15px;" onclick="doEdit('+"'"+id+"'"+')">Confirm</button>' +
 				'</footer>' +
+				'</form>' +
 			'</article>' +
 		'</dialog>'
 	;
