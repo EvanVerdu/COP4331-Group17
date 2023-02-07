@@ -88,8 +88,14 @@ function readCookie() {
 			userId = parseInt(tokens[1].trim());
 		}
 	}
-	
-	return (userId < 0);
+
+	if (userId < 0) {
+		window.location.href = "index.html";
+
+	} else {
+		window.location.href = "landing.html";
+	}
+
 }
 
 function doRegister() {
@@ -185,7 +191,7 @@ function removeErrorBox()
 	errBox.innerHTML = "";
 }
 
-function createEditBox()
+function createCreateBox(id)
 {
 	// Modifies the html to include a box that allows the user to edit
 	// the values of a contact
@@ -195,25 +201,97 @@ function createEditBox()
 	popup.innerHTML =
 		'<dialog open>' +
 		'<article>' +
-		'<h3>Edit</h3>' +
-		'<p>TODO</p>' +
+		'<h3>Create</h3>' +
+		'<label htmlFor="firstname">' +
+		'First name' +
+		'<input type="text" id="firstname" name="firstname" placeholder="First name" required>' +
+		'</label>' +
+		'<label htmlFor="lastname">' +
+		'lastname' +
+		'<input type="text" id="lastname" name="firstname" placeholder="Last name" required>' +
+		'</label>' +
+		'<label htmlFor="phone">' +
+		'Phone' +
+		'<input type="text" id="phone" name="phone" placeholder="Phone" required>' +
+		'</label>' +
+		'<label htmlFor="email">' +
+		'Email' +
+		'<input type="text" id="email" name="email" placeholder="Email" required>' +
+		'</label>' +
 		'<footer>' +
-		'<button id="clearButton" onclick="removeEditBox()">Confirm</button>' +
+		'<button onclick="createContactFromPopup()">Create</button>\n' +
 		'</footer>' +
 		'</article>' +
 		'</dialog>'
 	;
 }
 
-function removeEditBox()
+function createEditBox(id)
+{
+	// Modifies the html to include a box that allows the user to edit
+	// the values of a contact
+
+	let popup = document.getElementById("popup");
+	popup.innerHTML =
+		'<dialog open>' +
+			'<article>' +
+				'<h3>Edit</h3>' +
+				'<label htmlFor="firstname">' +
+					'First name' +
+					'<input type="text" id="firstname" name="firstname" placeholder="First name" required>' +
+				'</label>' +
+				'<label htmlFor="lastname">' +
+					'Last name' +
+					'<input type="text" id="lastname" name="lastname" placeholder="Last name" required>' +
+				'</label>' +
+				'<label htmlFor="phone">' +
+					'Phone' +
+					'<input type="text" id="phone" name="phone" placeholder="Phone" required>' +
+				'</label>' +
+				'<label htmlFor="email">' +
+					'Phone' +
+					'<input type="text" id="email" name="email" placeholder="Email" required>' +
+				'</label>' +
+				'<footer>' +
+					'<button onclick="editContact('+id.id+')">Edit</button>' +
+				'</footer>' +
+			'</article>' +
+		'</dialog>'
+	;
+}
+
+function editContact(id)
+{
+	// TODO Link with API!
+	let firstName = document.getElementById("firstname").value;
+	let lastName = document.getElementById("lastname").value;
+	let phone = document.getElementById("phone").value;
+	let email = document.getElementById("email").value;
+	removeContact(id);
+	createContact(firstName, lastName, phone, email);
+	removePopup();
+}
+
+function removePopup()
 {
 	let errBox = document.getElementById("popup");
 	errBox.innerHTML = "";
 }
 
-let cardCount = 0;
+function createContactFromPopup()
+{
+	// TODO Link with API!
+	let firstName = document.getElementById("firstname").value;
+	let lastName = document.getElementById("lastname").value;
+	let phone = document.getElementById("phone").value;
+	let email = document.getElementById("email").value;
 
-function addNewContact(firstName, lastName, phone, email)
+	removePopup();
+	createContact(firstName, lastName, phone, email);
+}
+
+let cardCount = 0;
+function createContact(firstName, lastName, phone, email)
 {
 	// Adds a new contact to the grid
 	// Accepts 4 strings
@@ -225,26 +303,27 @@ function addNewContact(firstName, lastName, phone, email)
 	let contactList = document.getElementById("contactList");
 	contactList.innerHTML +=
 		'<div class="col-xl-4 col-md-6 col-sm-12" id="'+id+'">\n' +
-		'<article class = "contact-box">\n' +
+		'<article>\n' +
 		'<hgroup>\n' +
 		'<h1>'+firstName+' '+lastName+'</h1>\n' +
 		''+phone+'<br>\n' +
 		''+email+'\n' +
 		'</hgroup>\n' +
-		'<footer class= "contact-box-footer">\n' +
-		'<button onclick="createEditBox()">Edit</button>\n' +
-		'<button onclick="removeContactCard('+id+')">Delete</button>\n' +
+		'<footer class="contact-box-footer">\n' +
+		'<button onclick="createEditBox('+id+')">Edit</button>' +
+		'<button onclick="removeContact('+id+')">Delete</button>' +
 		'</footer>\n' +
 		'</article>\n' +
 		'</div>'
 	;
 }
 
-function removeContactCard(id)
+function removeContact(id)
 {
 	// A function to remove a contact card from the grid
 	// Called from inside the given contact card
 	// TODO	This needs to also remove the card from the database!
+
 	document.getElementById('contactList').removeChild(id);
 }
 
