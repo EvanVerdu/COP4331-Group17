@@ -256,9 +256,7 @@ function doDelete(id) {
 					}else{
 						removeContactCard(id);
 						closePopup();
-						if(document.getElementById("contactList").childNodes.length < 1){
-							document.getElementById("landing-message").innerHTML = 'You currently have no contacts, begin adding them by clicking "Add New"!';
-						}
+						loadAll();
 					}
 				}
 			};
@@ -361,6 +359,7 @@ function loadAll(){
 	// Make sure to remove all current cards
 	document.getElementById("contactList").innerHTML = "";
 	document.getElementById("search").value = "";
+	document.getElementById("landing-message").innerHTML = "";
 
 	let tmp = {"userID" : userId, "search" : ""};
 	let jsonPayload = JSON.stringify(tmp);
@@ -412,7 +411,7 @@ function createContactCard(name, phone, email, id)
 	let contactList = document.getElementById("contactList");
 	contactList.innerHTML +=
 		'<div class="col-xl-3 col-md-6 col-sm-12">\n' +
-		'<article style="border-radius:20px;">\n' +
+		'<article style="border-radius:20px; margin-top:20px; margin-bottom:20px;">\n' +
 		'<hgroup id="'+id+'">\n' +
 		'<h1 id="name">'+name+'</h1>\n'+
 		'<span id="phone">'+phone+'</span><br>\n' +

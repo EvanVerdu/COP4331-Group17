@@ -61,7 +61,8 @@
 html {
     background-image: url("img/background.jpg");
     background-size: 300vh;
-    background-repeat:inherit;
+    background-repeat:inherit; 
+    
 }
 
 grid {
@@ -88,11 +89,11 @@ hr{
     border-radius:20px;
 }
 #search::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgb(194, 194, 194);
+    color: hsl(206, 24%, 45%)!important;
     opacity: 1; /* Firefox */
 }
 #landing-message{
-    color:white;
+    color:hsl(205deg 25% 23%)!important;
     font-size:30px;
     text-align:center;
 }
