@@ -89,12 +89,7 @@ function readCookie() {
 		}
 	}
 
-	if (userId < 0) {
-		window.location.href = "index.html";
-
-	} else {
-		window.location.href = "landing.html";
-	}
+	return (userId >= 0);
 
 }
 
@@ -253,7 +248,7 @@ function createEditBox(id)
 					'<input type="text" id="email" name="email" placeholder="Email" required>' +
 				'</label>' +
 				'<footer>' +
-					'<button onclick="editContact('+id.id+')">Edit</button>' +
+					'<button onclick="editContact('+id+')">Edit</button>' +
 				'</footer>' +
 			'</article>' +
 		'</dialog>'
@@ -267,8 +262,38 @@ function editContact(id)
 	let lastName = document.getElementById("lastname").value;
 	let phone = document.getElementById("phone").value;
 	let email = document.getElementById("email").value;
+	if (firstName === "" || lastName === "" || phone === "" || email === "") {
+			return;
+	}
+
+	let tmp = {"id": id,"name": firstName + " " + lastName, "phone": phone, "email" : email};
+	let jsonPayload = JSON.stringify(tmp);
+	let url = urlBase + "Update" + ext;
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', url, true);
+	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+	try {
+			xhr.onreadystatechange = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					let jsonObject = JSON.parse(xhr.responseText);
+
+					if (jsonObject.error === "") {
+						throw new Error(jsonObject.error);
+					}
+				}
+			};
+			xhr.send(jsonPayload);
+	} catch(err) {
+		createErrorBox(
+			errBox,
+			"Uh oh, something REALLY went wrong!",
+			"Something went wrong while processing your request. Try again later."
+		);
+		console.log(err);
+		return;
+	}
 	removeContact(id);
-	createContact(firstName, lastName, phone, email);
+	createContact(firstName, lastName, phone, email, id);
 	removePopup();
 }
 
@@ -285,19 +310,47 @@ function createContactFromPopup()
 	let lastName = document.getElementById("lastname").value;
 	let phone = document.getElementById("phone").value;
 	let email = document.getElementById("email").value;
+	if (firstName === "" || lastName === "" || phone === "" || email === "") {
+			return;
+	}
+	id = 'c';
+	let tmp = {"name": firstName + " " + lastName, "phone": phone, "email" : email, "userId" : userId};
+	let jsonPayload = JSON.stringify(tmp);
+	let url = urlBase + "Create" + ext;
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', url, true);
+	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+	try {
+			xhr.onreadystatechange = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					let jsonObject = JSON.parse(xhr.responseText);
+					id ='c' + jsonObject.id;
+					if (jsonObject.error !== "") {
+						throw new Error(jsonObject.error);
+					}
+				}
+			};
+			xhr.send(jsonPayload);
+	} catch(err) {
+		createErrorBox(
+			errBox,
+			"Uh oh, something REALLY went wrong!",
+			"Something went wrong while processing your request. Try again later."
+		);
+		console.log(err);
+		return;
+	}
 
 	removePopup();
-	createContact(firstName, lastName, phone, email);
+	createContact(firstName, lastName, phone, email, id);
 }
 
-let cardCount = 0;
-function createContact(firstName, lastName, phone, email)
+function createContact(firstName, lastName, phone, email, id)
 {
 	// Adds a new contact to the grid
 	// Accepts 4 strings
 
 	// Create id string by adding 'c' to how many cards there are
-	let id = 'c'+cardCount++;
 
 	// Add to html
 	let contactList = document.getElementById("contactList");
@@ -311,7 +364,7 @@ function createContact(firstName, lastName, phone, email)
 		'</hgroup>\n' +
 		'<footer class="contact-box-footer">\n' +
 		'<button onclick="createEditBox('+id+')">Edit</button>' +
-		'<button onclick="removeContact('+id+')">Delete</button>' +
+		'<button onclick="deleteContact('+id+')">Delete</button>' +
 		'</footer>\n' +
 		'</article>\n' +
 		'</div>'
@@ -322,12 +375,37 @@ function removeContact(id)
 {
 	// A function to remove a contact card from the grid
 	// Called from inside the given contact card
-	// TODO	This needs to also remove the card from the database!
-
 	document.getElementById('contactList').removeChild(id);
 }
 
-
+function deleteContact(id) {
+	let tmp = {"id" : id};
+	let jsonPayload = JSON.stringify(tmp);
+	let url = urlBase + "Delete" + ext;
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', url, true);
+	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+	try {
+			xhr.onreadystatechange = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					let jsonObject = JSON.parse(xhr.responseText);
+					if (jsonObject.status === "fail") {
+						throw new Error(jsonObject.error );
+					}
+				}
+			};
+			xhr.send(jsonPayload);
+	} catch(err) {
+		createErrorBox(
+			errBox,
+			"Uh oh, something REALLY went wrong!",
+			"Something went wrong while processing your request. Try again later."
+		);
+		console.log(err);
+		return;
+	}
+	removeContact(id);
+}
 
 function updateBox() {
 	document.getElementById("username").removeAttribute("aria-invalid", "false");
@@ -344,3 +422,65 @@ function updateBox2() {
 	document.getElementById("message").innerHTML = "";
 }
 
+function openLandingPage() {
+	if (!readCookie()) {
+		window.location.href = "index.html";
+		return;
+	}
+	document.getElementById("welcome").innerHTML = "Welcome, " + firstName + ".";
+	updateContactList();
+}
+
+function openLoginPage() {
+	if (readCookie()) {
+		window.location.href = "landing.html";
+	}
+}
+
+function doLogout()
+{
+	userId = 0;
+	firstName = "";
+	lastName = "";
+	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+	window.location.href = "index.html";
+}
+
+function updateContactList() {
+	let keyword = document.getElementById("search").value;
+
+	let tmp = {"userID" : userId, "search" : keyword};
+	let jsonPayload = JSON.stringify(tmp);
+	let url = urlBase + "Search" + ext;
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', url, true);
+	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+	try {
+			xhr.onreadystatechange = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					let jsonObject = JSON.parse(xhr.responseText);
+					if (jsonObject.error !== "") {
+						throw new Error(jsonObject.error);
+					}
+					for (let i = 0; i < jsonObject.results.length; i++) {
+						let curr = jsonObject.results[i];
+						fullName = curr.Name.split(" ");
+						first = fullName[0];
+						last = fullName[1];
+						phone = curr.Phone;
+						email = curr.Email;
+						id = curr.id;
+						createContact(first, last, phone, email, id);
+					}
+				}
+			};
+			xhr.send(jsonPayload);
+	} catch(err) {
+		createErrorBox(
+			errBox,
+			"Uh oh, something REALLY went wrong!",
+			"Something went wrong while processing your request. Try again later."
+		);
+		console.log(err);
+	}
+}
